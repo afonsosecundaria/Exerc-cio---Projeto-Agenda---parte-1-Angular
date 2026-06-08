@@ -1,1 +1,26 @@
-<p>contato works!</p>
+<div class="container">
+
+    <form class="container" [formGroup]="formMedia">
+      <h2 class="text-center">Calcule a Média da Suas disciplinas</h2>
+      <div>
+        <label for="nome" class="form-label">Digite seu nome</label>
+        <input id="nome" type="text" class="form-control" formControlName="nome">
+      </div>
+      <div>
+        <label for="telefone" class="form-label">Bimestre 2</label>
+        <input id="telefone" type="text" class="form-control" formControlName="telefone">
+      </div>
+      <div>
+        <label for="email" class="form-label">Bimestre 3</label>
+        <input id="email" type="text" class="form-control" formControlName="email">
+      </div>
+      <div>
+        <label for="b4" class="form-label">Bimestre 4</label>
+        <input id="b4" type="number" class="form-control" formControlName="bim4">
+      </div>
+      <input type="button" 
+      class="bnt bnt-primary d-block mx-auto" 
+      value="Calcular" 
+      [disabled]="formMedia.invalid" 
+      (click)="calcularMediaParcial()">
+    </form>
