@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'; 
-import { Contato } from '../../models/contato.model';
-
-
+import { Contato, tipoContato } from '../../models/contato.model';
 
 @Component({
   selector: 'app-contato',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './contato.html',
   styleUrl: './contato.css',
@@ -14,26 +13,41 @@ import { Contato } from '../../models/contato.model';
 export class adicionarContato {
   #fb = inject(FormBuilder)
   formContato: FormGroup
-  contatos: Contato[]
+  contatos: Contato[] = []
+  tipos = Object.values(tipoContato)
+
   constructor(){
     this.formContato = this.#fb.group({
-      nome: [undefined, [Validators.required,
+      nome: ['', [Validators.required,
         Validators.min(0),
         Validators.max(100)        
       ]],
-      telefone: [undefined, [Validators.required,
+      telefone: ['', [Validators.required,
               Validators.min(0),
               Validators.max(100)        
       ]],
-      bim3: [undefined, [Validators.required,
+      email: ['', [Validators.required,
               Validators.min(0),
               Validators.max(100)        
       ]],
-      bim4: [undefined, [Validators.required,
-              Validators.min(0),
-              Validators.max(100)        
-      ]],
+      aniversario: ['', [Validators.required,]],
+      tipo: ['', Validators.required]
     })
+  }
+  adicionarContato(): void{
+    if(this.formContato.invalid){
+      return
+    }
+    const dados = this.formContato.value
+    const novoContato = new Contato(
+      dados.nome,
+      dados.telefone,
+      dados.email,
+      dados.aniversario,
+      dados.tipo
+    )
+    this.contatos.push(novoContato)
+    this.formContato.reset
   }
   
 
