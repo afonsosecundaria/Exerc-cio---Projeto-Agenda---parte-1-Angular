@@ -19,21 +19,40 @@ export class adicionarContato {
   constructor(){
     this.formContato = this.#fb.group({
       nome: ['', [Validators.required,
-        Validators.min(0),
-        Validators.max(100)        
+        Validators.minLength(0),
+        Validators.maxLength(100)        
       ]],
       telefone: ['', [Validators.required,
-              Validators.min(0),
-              Validators.max(100)        
+              Validators.minLength(0),
+              Validators.maxLength(11)        
       ]],
       email: ['', [Validators.required,
-              Validators.min(0),
-              Validators.max(100)        
+              Validators.minLength(0),
+              Validators.maxLength(100)        
       ]],
       aniversario: ['', [Validators.required,]],
       tipo: ['', Validators.required]
     })
+
+    const contatosSalvos = localStorage.getItem('contatos');
+
+    if(contatosSalvos){
+      const dados = JSON.parse(contatosSalvos);
+
+      this.contatos = dados.map(
+        (c: any) =>
+          new Contato(
+            c.nome,
+            c.telefone,
+            c.email,
+            c.aniversario,
+            c.tipo
+          )
+      );
+    }
   }
+
+
   adicionarContato(): void{
     if(this.formContato.invalid){
       return
@@ -47,7 +66,13 @@ export class adicionarContato {
       dados.tipo
     )
     this.contatos.push(novoContato)
-    this.formContato.reset
+
+    localStorage.setItem(
+    'contatos',
+    JSON.stringify(this.contatos)
+    );
+
+    this.formContato.reset()
   }
   
 

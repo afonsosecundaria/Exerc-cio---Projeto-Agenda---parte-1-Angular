@@ -47,13 +47,11 @@
 
         <option value="">Selecione</option>
 
-        <option
-          *ngFor="let tipo of tipos"
-          [value]="tipo">
-
+        @for(tipo of tipos; track tipo){
+        <option [value]="tipo">
           {{ tipo }}
-
         </option>
+      }
 
       </select>
     </div>
@@ -74,32 +72,36 @@
 
   <h3>Contatos Cadastrados</h3>
 
-  <table class="table table-striped" *ngIf="contatos.length > 0">
+  @if(contatos.length > 0){
 
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Telefone</th>
-        <th>Email</th>
-        <th>Aniversário</th>
-        <th>Tipo</th>
-      </tr>
-    </thead>
+    <table class="table table-striped">
 
-    <tbody>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Telefone</th>
+          <th>Email</th>
+          <th>Aniversário</th>
+          <th>Tipo</th>
+        </tr>
+      </thead>
 
-      <tr *ngFor="let contato of contatos">
+      <tbody>
 
-        <td>{{ contato.getNome() }}</td>
-        <td>{{ contato.getTelefone() }}</td>
-        <td>{{ contato.getEmail() }}</td>
-        <td>{{ contato.getAniversario() }}</td>
-        <td>{{ contato.getTipo() }}</td>
+        @for(contato of contatos; track $index){
 
-      </tr>
+          <tr>
+            <td>{{ contato.nome }}</td>
+            <td>{{ contato.telefone }}</td>
+            <td>{{ contato.email }}</td>
+            <td>{{ contato.aniversario }}</td>
+            <td>{{ contato.tipo }}</td>
+          </tr>
+
+        }
 
     </tbody>
 
   </table>
-
+  }
 </div>

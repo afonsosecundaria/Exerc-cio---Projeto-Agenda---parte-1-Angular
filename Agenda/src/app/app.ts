@@ -1,9 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { adicionarContato } from './components/contato/contato';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,],
+  standalone: true,
+  imports: [CommonModule, adicionarContato],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
