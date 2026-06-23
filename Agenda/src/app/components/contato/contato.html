@@ -48,10 +48,10 @@
         <option value="">Selecione</option>
 
         @for(tipo of tipos; track tipo){
-        <option [value]="tipo">
-          {{ tipo }}
-        </option>
-      }
+          <option [value]="tipo">
+            {{ tipo }}
+          </option>
+        }
 
       </select>
     </div>
@@ -68,40 +68,4 @@
 
   </form>
 
-  <hr>
-
-  <h3>Contatos Cadastrados</h3>
-
-  @if(contatos.length > 0){
-
-    <table class="table table-striped">
-
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Telefone</th>
-          <th>Email</th>
-          <th>Aniversário</th>
-          <th>Tipo</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        @for(contato of contatos; track $index){
-
-          <tr>
-            <td>{{ contato.nome }}</td>
-            <td>{{ contato.telefone }}</td>
-            <td>{{ contato.email }}</td>
-            <td>{{ contato.aniversario }}</td>
-            <td>{{ contato.tipo }}</td>
-          </tr>
-
-        }
-
-    </tbody>
-
-  </table>
-  }
 </div>

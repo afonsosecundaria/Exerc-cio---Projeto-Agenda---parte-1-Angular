@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'; 
 import { Contato, tipoContato } from '../../models/contato.model';
+import { AgendaService } from '../../services/agenda.service';
 
 @Component({
   selector: 'app-contato',
@@ -10,10 +11,11 @@ import { Contato, tipoContato } from '../../models/contato.model';
   templateUrl: './contato.html',
   styleUrl: './contato.css',
 })
+
 export class adicionarContato {
   #fb = inject(FormBuilder)
+  #agenda = inject(AgendaService)
   formContato: FormGroup
-  contatos: Contato[] = []
   tipos = Object.values(tipoContato)
 
   constructor(){
@@ -34,22 +36,6 @@ export class adicionarContato {
       tipo: ['', Validators.required]
     })
 
-    const contatosSalvos = localStorage.getItem('contatos');
-
-    if(contatosSalvos){
-      const dados = JSON.parse(contatosSalvos);
-
-      this.contatos = dados.map(
-        (c: any) =>
-          new Contato(
-            c.nome,
-            c.telefone,
-            c.email,
-            c.aniversario,
-            c.tipo
-          )
-      );
-    }
   }
 
 
@@ -64,16 +50,15 @@ export class adicionarContato {
       dados.email,
       dados.aniversario,
       dados.tipo
-    )
-    this.contatos.push(novoContato)
-
-    localStorage.setItem(
-    'contatos',
-    JSON.stringify(this.contatos)
     );
 
-    this.formContato.reset()
-  }
-  
+    const adicionou = this.#agenda.adicionar(novoContato);
 
+      if (adicionou) {
+        this.formContato.reset();
+      } else {
+        alert('Contato já cadastrado!');
+      }
+    }
+  
 }
