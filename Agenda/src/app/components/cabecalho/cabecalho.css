@@ -1,4 +1,11 @@
 *{
     background-color: black;
-    color: azure;
+    height: 100px;
+    text-align: center;
+}
+
+h1{
+    padding-top: 20px;
+    color: white;
+    font-family: Arial;
 }
